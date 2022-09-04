@@ -35,6 +35,4 @@ COPY hosts /etc/mosdns/hosts
 COPY supervisord.conf /etc/supervisord.conf
 VOLUME /etc/mosdns
 EXPOSE 53/udp 53/tcp
-RUN chmod +x /entry.sh
-RUN chmod +x /entrypoint.sh
 CMD ["/usr/bin/supervisord", "-c", "/etc/supervisord.conf"]
