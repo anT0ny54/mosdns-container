@@ -32,9 +32,9 @@ ADD https://github.com/Loyalsoldier/v2ray-rules-dat/raw/release/geoip.dat /geoip
 ADD https://github.com/Loyalsoldier/v2ray-rules-dat/raw/release/geosite.dat /geosite.dat
 ADD hosts /etc/mosdns/hosts
 COPY hosts /etc/mosdns/hosts
-COPY supervisord.conf /etc/supervisor/conf.d/supervisord.conf
+COPY supervisord.conf /etc/supervisord.conf
 VOLUME /etc/mosdns
 EXPOSE 53/udp 53/tcp
 RUN chmod +x /entry.sh
 RUN chmod +x /entrypoint.sh
-CMD ["/usr/bin/supervisord"]
+CMD ["/usr/bin/supervisord -c /etc/supervisord.conf"]
