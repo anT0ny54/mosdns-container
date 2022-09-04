@@ -31,6 +31,8 @@ ADD https://github.com/Loyalsoldier/v2ray-rules-dat/raw/release/geosite.dat /geo
 ADD hosts /etc/mosdns/hosts
 COPY hosts /etc/mosdns/hosts
 COPY supervisord.conf /etc/supervisord.conf
+ADD script.sh /etc/mosdns/install_geodata.sh
+COPY script.sh /etc/mosdns/install_geodata.sh
 VOLUME /etc/mosdns
 EXPOSE 53/udp 53/tcp
 CMD ["/usr/bin/supervisord", "-c", "/etc/supervisord.conf"]
