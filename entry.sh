@@ -1,4 +1,4 @@
 #!/bin/sh
 
 # start cron
-/usr/bin/crontab /crontab.txt
+/usr/sbin/crond -f
