@@ -13,18 +13,16 @@ RUN apk add --update git \
 
 FROM --platform=${TARGETPLATFORM} alpine:latest
 
-ADD crontab.txt /crontab.txt
-ADD script.sh /script.sh
-ADD script1.sh /script1.sh
-COPY entry.sh /entry.sh
-RUN /usr/bin/crontab /crontab.txt
-ADD hosts /hosts
-COPY hosts /hosts
-
 COPY --from=builder /root/mosdns/mosdns /usr/bin/
 
 RUN apk add --no-cache supervisor ca-certificates \
 	&& mkdir /etc/mosdns
+ADD crontab.txt /crontab.txt
+ADD script.sh /script.sh
+ADD script1.sh /script1.sh
+COPY entry.sh /entry.sh
+ADD hosts /hosts
+COPY hosts /hosts
 ADD entry.sh /entry.sh
 ADD entrypoint.sh /entrypoint.sh
 ADD config.yaml /config.yaml
