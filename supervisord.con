@@ -1,0 +1,15 @@
+[supervisord]
+nodaemon = true
+...
+
+[program:cron]
+command=/usr/sbin/crond -f
+user=root
+autostart=true
+autorestart=true
+
+[program:mosdns]
+command=sh /entry1.sh
+user=root
+autostart=true
+autorestart=true
