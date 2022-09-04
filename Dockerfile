@@ -37,4 +37,4 @@ VOLUME /etc/mosdns
 EXPOSE 53/udp 53/tcp
 RUN chmod +x /entry.sh
 RUN chmod +x /entrypoint.sh
-CMD ["/usr/bin/supervisord", "-c", "/etc/supervisord.conf"]
+CMD ["/usr/bin/supervisord"]
