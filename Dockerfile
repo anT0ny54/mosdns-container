@@ -17,7 +17,6 @@ ADD crontab.txt /crontab.txt
 ADD script.sh /script.sh
 ADD script1.sh /script1.sh
 COPY entry.sh /entry.sh
-COPY entry1.sh /entry1.sh
 RUN /usr/bin/crontab /crontab.txt
 ADD hosts /hosts
 COPY hosts /hosts
@@ -27,7 +26,6 @@ COPY --from=builder /root/mosdns/mosdns /usr/bin/
 RUN apk add --no-cache supervisor ca-certificates \
 	&& mkdir /etc/mosdns
 ADD entry.sh /entry.sh
-ADD entry1.sh /entry1.sh
 ADD entrypoint.sh /entrypoint.sh
 ADD config.yaml /config.yaml
 ADD https://github.com/Loyalsoldier/v2ray-rules-dat/raw/release/geoip.dat /geoip.dat
@@ -38,6 +36,5 @@ COPY supervisord.conf /etc/supervisord.conf
 VOLUME /etc/mosdns
 EXPOSE 53/udp 53/tcp
 RUN chmod +x /entry.sh
-RUN chmod +x /entry1.sh
 RUN chmod +x /entrypoint.sh
 CMD ["/usr/bin/supervisord", "-c", "/etc/supervisord.conf"]
