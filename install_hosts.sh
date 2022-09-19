@@ -13,8 +13,8 @@
 DAT_PATH=${DAT_PATH:-/etc/mosdns}
 
 DOWNLOAD_LINK_HOSTS="https://raw.githubusercontent.com/t0ny54/blocklistwithregex/main/export/blocklist.txt"
-file_hosts='hosts'
-dir_tmp="$(/etc/mosdns -d)"
+file_hosts='blocklist.txt'
+dir_tmp="$(mktemp -d)"
 
 download_files() {
   if ! wget -q --no-cache -O "${dir_tmp}/${2}" "${1}"; then
@@ -47,7 +47,7 @@ install_file() {
 
 main() {
   echo "Updating hosts"
-  wget -O $file_hosts $DOWNLOAD_LINK_HOSTS
+  download_files $DOWNLOAD_LINK_HOSTS $file_hosts
   check_sum
   install_file
 }
