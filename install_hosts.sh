@@ -51,6 +51,7 @@ main() {
   echo "Updating hosts"
   wget -O $file_hosts $DOWNLOAD_LINK_HOSTS
   check_sum
+  install_file
 }
 
 main "$@"
