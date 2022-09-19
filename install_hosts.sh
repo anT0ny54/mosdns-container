@@ -1,23 +1,56 @@
 #!/bin/sh
 
-while :
-do
-   echo "infinite loops hosts"
+#!/bin/sh
 
-HOSTS_URL="https://raw.githubusercontent.com/t0ny54/blocklistwithregex/main/export/blocklist.txt"
-NEW_HOSTS="hosts"
-HOSTS_PATH="/etc/mosdns/hosts"
+# This shell script to install the latest release of geoip.dat and geosite.dat:
 
-# Grab hosts file
-wget -O $NEW_HOSTS $HOSTS_URL
+# The URL of the script project is:
+# https://github.com/v2fly/fhs-install-v2ray
 
-# Backup old hosts file
-cp -v $HOSTS_PATH ${HOSTS_PATH}.bak$(date -u +%s)
-cp -v $NEW_HOSTS $HOSTS_PATH
+# Modified by wy580477 for customized container <https://github.com/wy580477>
 
-# Clean up old downloads
-rm $NEW_HOSTS*
+# You can set this variable whatever you want in shell session right before running this script by issuing:
+# export DAT_PATH='/usr/local/lib/v2ray'
 
-sleep 43200
+DAT_PATH=${DAT_PATH:-/etc/mosdns}
 
-done
+DOWNLOAD_LINK_HOSTS="https://raw.githubusercontent.com/t0ny54/blocklistwithregex/main/export/blocklist.txt"
+file_hosts='hosts'
+dir_tmp="$(temp -d)"
+
+download_files() {
+  if ! wget -q --no-cache -O "${dir_tmp}/${2}" "${1}"; then
+    echo 'error: Download failed! Please check your network or try again.'
+    exit 1
+  fi
+  if ! wget -q --no-cache -O "${dir_tmp}/${2}.sha256sum" "${1}.sha256sum"; then
+    echo 'error: Download failed! Please check your network or try again.'
+    exit 1
+  fi
+}
+
+check_sum() {
+  (
+    cd "${dir_tmp}" || exit
+    for i in "${dir_tmp}"/*.sha256sum; do
+      if ! sha256sum -c "${i}"; then
+        echo 'error: Check failed! Please check your network or try again.'
+        exit 1
+      fi
+    done
+  )
+}
+
+install_file() {
+  mkdir -p ${DAT_PATH} 2>/dev/null
+  cp -af "${dir_tmp}"/${file_hosts} "${DAT_PATH}"/${file_hosts}
+  rm -r "${dir_tmp}"
+}
+
+main() {
+  echo "Updating hosts"
+  wget -O $file_hosts $DOWNLOAD_LINK_HOSTS
+  check_sum
+}
+
+main "$@"
