@@ -1,7 +1,5 @@
 #!/bin/sh
 
-#!/bin/sh
-
 # This shell script to install the latest release of geoip.dat and geosite.dat:
 
 # The URL of the script project is:
@@ -16,7 +14,7 @@ DAT_PATH=${DAT_PATH:-/etc/mosdns}
 
 DOWNLOAD_LINK_HOSTS="https://raw.githubusercontent.com/t0ny54/blocklistwithregex/main/export/blocklist.txt"
 file_hosts='hosts'
-dir_tmp="$(temp -d)"
+dir_tmp="$(mktemp -d)"
 
 download_files() {
   if ! wget -q --no-cache -O "${dir_tmp}/${2}" "${1}"; then
