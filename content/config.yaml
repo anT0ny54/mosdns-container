@@ -1,5 +1,5 @@
 log:
-  level: info
+  level: debug
 
 data_providers:
   - tag: geosite
@@ -18,8 +18,8 @@ plugins:
     args:
       upstream:
         - addr: 'https://dns.adguard-dns.com/dns-query'
-          dial_addr: '94.140.15.15:443'
-          trusted: true 
+        - addr: 'https://dns.dnswarden.com/000000000000010000000000000000000000000000000000000000000000'
+        - addr: 'https://basic.rethinkdns.com/1:AAIAAQ=='
           
   - tag: "mem_cache"
     type: "cache"
@@ -98,3 +98,4 @@ servers:
         addr: ":PORT_PLACEHOLDER"   
         url_path: "PATH_PLACEHOLDER"
         get_user_ip_from_header: "X-Forwarded-For"
+        
