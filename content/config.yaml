@@ -19,6 +19,7 @@ plugins:
       upstream:
         - addr: 'https://dns.adguard-dns.com/dns-query'
         - addr: 'https://basic.rethinkdns.com/1:AAIAAQ=='
+        - addr: 'tls://dns.adguard-dns.com'
           
   - tag: "mem_cache"
     type: "cache"
